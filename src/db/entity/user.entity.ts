@@ -5,16 +5,16 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import Book from './book.entity';
+import BookEntity from './book.entity';
 
 @Entity()
-export default class User extends BaseEntity {
+export default class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ length: 500 })
   name: string;
 
-  @OneToMany((type) => Book, (book) => book.user)
-  books: Book[];
+  @OneToMany((type) => BookEntity, (book) => book.user)
+  books: BookEntity[];
 }
