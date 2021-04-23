@@ -1,7 +1,17 @@
-import { Body, Controller, Get, Header, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Header,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import GenreServices from './genre.services';
 import CreateGenreDto from './dto/create-genre.dto';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiQuery, ApiResponse } from '@nestjs/swagger';
+import UpdateGenreDto from './dto/update-genre.dto';
 
 @Controller('genre')
 export default class GenreController {
@@ -24,5 +34,28 @@ export default class GenreController {
   @Get()
   getAll() {
     return this.genreServices.getAllGenre();
+  }
+
+  @ApiResponse({
+    description: 'Delete genre',
+    status: 200,
+  })
+  @ApiQuery({
+    name: 'genre_id',
+    required: true,
+    type: 'number',
+  })
+  @Delete()
+  deleteGenre(@Query('genre_id') genreId) {
+    return this.genreServices.delete(genreId);
+  }
+
+  @ApiResponse({
+    description: 'Update genre',
+    status: 200,
+  })
+  @Put()
+  updateGenre(@Body() updateDetails: UpdateGenreDto) {
+    return this.genreServices.update(updateDetails);
   }
 }
